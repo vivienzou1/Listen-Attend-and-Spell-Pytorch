@@ -1,8 +1,4 @@
 # Listen, Attend and Spell - Pytorch Implementation
-#### Alex Liu
-##### Speech Processing Laboratory, National Taiwan University
-
-
 
 ## Description
 
