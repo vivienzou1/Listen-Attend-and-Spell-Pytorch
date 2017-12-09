@@ -26,6 +26,3 @@ training_parameter:
   num_epochs: 100
   batch_size: 4
   verbose_step: 20                            # Show progress every verbose_step
-  verbose: True                               # If True, the training progress will be printed to stdout
-  use_pretrained: False                       # Load a pretrained model
-  pretrained_model_path: ''                   # pretrained_model_path should be specified if use_pretrained == True

@@ -16,6 +16,7 @@ except:
     print('Usage: python3 run_exp.py <config file path>')
 
 # Parameters loading
+torch.manual_seed(conf['training_parameter']['seed'])
 num_epochs = conf['training_parameter']['num_epochs']
 training_msg = 'epoch_{:2d}_step_{:3d}_TrLoss_{:.4f}_TrWER_{:.2f}'
 epoch_end_msg = 'epoch_{:2d}_TrLoss_{:.4f}_TrWER_{:.2f}_TtLoss_{:.4f}_TtWER_{:.2f}_time_{:.2f}'
