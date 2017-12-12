@@ -72,9 +72,9 @@ Be aware of some difference between this implementation and the origianl propose
     
     Training log will be stored at `log/` while model checkpoint at ` checkpoint/`
     
-    For a customized experiment, please read and modify `config/las_example_config.yaml`
+    For a customized experiment, please read and modify [`config/las_example_config.yaml`](config/las_example_config.yaml)
     
-    For more information and a simple demonstration, please refer to `las_demo.ipynb`(coming soon)
+    For more information and a simple demonstration, please refer to [`las_demo.ipynb`](las_demo.ipynb)
 
 ## ToDo
 
