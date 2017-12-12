@@ -5,6 +5,10 @@
 This is a pytorch implementation of [Listen, Attend and Spell](https://arxiv.org/abs/1508.01211v2) (LAS)  published in ICASSP 2016 (Student Paper Award).
 Please feel free to use/modify them, any bug report or improvment suggestion will be appreciated.
 
+This implement achieves 40% phoneme error rate on TIMIT (using original setting in the paper without hyper parameter tuning). It's not a remarkable score but please notice that deep end2end ASR without special designed loss function such as LAS requires larger corpus to achieve outstanding performance. As a comparison, [my another implement of CTC]()(coming soon) achieves about 32% error rate with the exact same input and experiment setting.
+
+![](log/result.jpg)
+
 Be aware of some difference between this implementation and the origianl proposed model:
 
 - Smaller Dataset
@@ -73,7 +77,7 @@ Be aware of some difference between this implementation and the origianl propose
     For more information and a simple demonstration, please refer to `las_demo.ipynb`(coming soon)
 
 ## ToDo
-- Demo notebook and experiment results suppliment
+
 - Experiment on WSJ dataset
 
 ## References
