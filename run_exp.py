@@ -47,8 +47,8 @@ optimizer = torch.optim.Adam([{'params':listener.parameters()}, {'params':spelle
 listener_model_path = conf['meta_variable']['checkpoint_dir']+conf['meta_variable']['experiment_name']+'.listener'
 speller_model_path = conf['meta_variable']['checkpoint_dir']+conf['meta_variable']['experiment_name']+'.speller'
 
-# save checkpoint with the best loss
-best_val_loss = 5
+# save checkpoint with the best ler
+best_ler = 1.0
 
 for epoch in range(num_epochs):
     epoch_head = time.time()
@@ -84,7 +84,7 @@ for epoch in range(num_epochs):
                                tt_loss[0]/len(test_set),sum(tt_ler)/len(tt_ler),training_time),flush=True,file=traing_log)
 
     # Checkpoint
-    if best_val_loss >= tt_loss[0]/len(test_set):
-        best_val_loss = tt_loss[0]/len(test_set)
+    if best_ler >= sum(tt_ler)/len(test_set):
+        best_ler = sum(tt_ler)/len(test_set)
         torch.save(listener, listener_model_path)
         torch.save(speller, speller_model_path)

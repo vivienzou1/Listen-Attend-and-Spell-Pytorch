@@ -58,7 +58,7 @@ class Listener(nn.Module):
 # Speller specified in the paper
 class Speller(nn.Module):
     def __init__(self, output_class_dim,  speller_hidden_dim, rnn_unit, speller_rnn_layer, use_gpu, max_label_len,
-                 use_mlp_in_attention, mlp_dim_in_attention, mlp_activate_in_attention, **kwargs):
+                 use_mlp_in_attention, mlp_dim_in_attention, mlp_activate_in_attention, listener_hidden_dim, **kwargs):
         super(Speller, self).__init__()
         self.rnn_unit = getattr(nn,rnn_unit.upper())
         self.max_label_len = max_label_len
@@ -67,7 +67,7 @@ class Speller(nn.Module):
         self.label_dim = output_class_dim
         self.rnn_layer = self.rnn_unit(output_class_dim+speller_hidden_dim,speller_hidden_dim,num_layers=speller_rnn_layer)
         self.attention = Attention( mlp_preprocess_input=use_mlp_in_attention, preprocess_mlp_dim=mlp_dim_in_attention,
-                                    activate=mlp_activate_in_attention)
+                                    activate=mlp_activate_in_attention, input_feature_dim=2*listener_hidden_dim)
         self.character_distribution = nn.Linear(speller_hidden_dim*2,output_class_dim)
         self.softmax = nn.LogSoftmax(dim=-1)
         if self.use_gpu:
