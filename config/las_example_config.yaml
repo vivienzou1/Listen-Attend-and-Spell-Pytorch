@@ -24,9 +24,9 @@ training_parameter:
   learning_rate: 0.0001
   seed: 1                  
   num_epochs: 200
-  batch_size: 8
+  batch_size: 4
   tf_rate_upperbound: 0.8                     # teacher forcing rate during training will be linearly
-  tf_rate_lowerbound: 0.2                     # decayinn from upperbound to lower bound for each epoch
+  tf_rate_lowerbound: 0.0                     # decayinn from upperbound to lower bound for each epoch
   verbose_step: 200                           # Show progress every verbose_step
   use_pretrained: False                       # Load a pretrained model, model path should be given
   pretrained_listener_path: 'checkpoint/las_example.listener' 
