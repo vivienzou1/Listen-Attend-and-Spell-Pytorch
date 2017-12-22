@@ -84,7 +84,7 @@ for epoch in range(num_epochs):
                                tt_loss[0]/len(test_set),sum(tt_ler)/len(tt_ler),training_time),flush=True,file=traing_log)
 
     # Checkpoint
-    if best_ler >= sum(tt_ler)/len(test_set):
-        best_ler = sum(tt_ler)/len(test_set)
+    if best_ler >= sum(tt_ler)/len(tt_ler):
+        best_ler = sum(tt_ler)/len(tt_ler)
         torch.save(listener, listener_model_path)
         torch.save(speller, speller_model_path)
