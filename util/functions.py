@@ -90,6 +90,18 @@ def batch_iterator(batch_data, batch_label, listener, speller, optimizer, tf_rat
                                 true_y.cpu().data.numpy().reshape(current_batch_size,max_label_len))
     return batch_loss, batch_ler
 
+def log_parser(log_file_path):
+    tr_loss,tt_loss,tr_ler,tt_ler = [], [], [], []
+    with open(log_file_path,'r') as log_f:
+        for line in log_f:
+            tmp = line.split('_')
+            tr_loss.append(float(tmp[3]))
+            tr_ler.append(float(tmp[5]))
+            tt_loss.append(float(tmp[7]))
+            tt_ler.append(float(tmp[9]))
+
+    return tr_loss,tt_loss,tr_ler,tt_ler
+
 
 
 
