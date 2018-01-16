@@ -1,5 +1,6 @@
 # Listen, Attend and Spell - Pytorch Implementation
 
+
 ## Description
 
 This is a pytorch implementation of [Listen, Attend and Spell](https://arxiv.org/abs/1508.01211v2) (LAS)  published in ICASSP 2016 (Student Paper Award).
@@ -24,6 +25,8 @@ Be aware of some difference between this implementation and the origianl propose
 - Simplified Speller
 
     Speller contains a single layer LSTM instaed of 2 layer LSTM proposed. According to the reponse I got from a letter I wrote to the author, using single layer can get similar result.
+
+If you have any questions, please contact b03902034[AT]ntu.edu.tw
 
 ## Requirements
 
