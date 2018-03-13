@@ -39,14 +39,16 @@ def TimeDistributed(input_module, input_x):
 def LetterErrorRate(pred_y,true_y):
     ed_accumalate = []
     for p,t in zip(pred_y,true_y):
-        compressed_t = []
-        compressed_p = []
         compressed_t = [w for w in t if (w!=1 and w!=0)]
-        p_reach_end = False
-        for p_w,t_w in zip(p,t):
+        compressed_t = collapse_phn(compressed_t)
+        compressed_p = []
+        for p_w in p:
+            if p_w == 0:
+                continue
             if p_w == 1:
                 break
             compressed_p.append(p_w)
+        compressed_p = collapse_phn(compressed_p)
         ed_accumalate.append(ed.eval(compressed_p,compressed_t)/len(compressed_t))
     return ed_accumalate
 
@@ -102,9 +104,35 @@ def log_parser(log_file_path):
 
     return tr_loss,tt_loss,tr_ler,tt_ler
 
+# Collapse 61 phns to 39 phns
+# http://cdn.intechopen.com/pdfs/15948/InTech-Phoneme_recognition_on_the_timit_database.pdf
+def collapse_phn(seq, return_phn = False, drop_q = True):
+    phonemes = ["b", "bcl", "d", "dcl", "g", "gcl", "p", "pcl", "t", "tcl", "k", "kcl", "dx", "q", "jh", "ch", "s", "sh", "z", "zh", 
+    "f", "th", "v", "dh", "m", "n", "ng", "em", "en", "eng", "nx", "l", "r", "w", "y", 
+    "hh", "hv", "el", "iy", "ih", "eh", "ey", "ae", "aa", "aw", "ay", "ah", "ao", "oy",
+    "ow", "uh", "uw", "ux", "er", "ax", "ix", "axr", "ax-h", "pau", "epi", "h#"]
 
+    phonemes2index = {k:(v+2) for v,k in enumerate(phonemes)}
+    index2phonemes = {(v+2):k for v,k in enumerate(phonemes)}
 
+    phonemse_reduce_mapping = {"b":"b", "bcl":"h#", "d":"d", "dcl":"h#", "g":"g", "gcl":"h#", "p":"p", "pcl":"h#", "t":"t", "tcl":"h#", "k":"k", "kcl":"h#", "dx":"dx", "q":"q", "jh":"jh", "ch":"ch", "s":"s", "sh":"sh", "z":"z", "zh":"sh", 
+    "f":"f", "th":"th", "v":"v", "dh":"dh", "m":"m", "n":"n", "ng":"ng", "em":"m", "en":"n", "eng":"ng", "nx":"n", "l":"l", "r":"r", "w":"w", "y":"y", 
+    "hh":"hh", "hv":"hh", "el":"l", "iy":"iy", "ih":"ih", "eh":"eh", "ey":"ey", "ae":"ae", "aa":"aa", "aw":"aw", "ay":"ay", "ah":"ah", "ao":"aa", "oy":"oy",
+    "ow":"ow", "uh":"uh", "uw":"uw", "ux":"uw", "er":"er", "ax":"ah", "ix":"ih", "axr":"er", "ax-h":"ah", "pau":"h#", "epi":"h#", "h#": "h#"}
 
+    # inverse index into phn
+    seq = [index2phonemes[idx] for idx in seq]
+    # collapse phn
+    seq = [phonemse_reduce_mapping[phn] for phn in seq]
+    # Discard phn q
+    if drop_q:
+        seq = [phn for phn in seq if phn != "q"]
+    else:
+        seq = [phn if phn != "q" else ' ' for phn in seq ]
+    if return_phn:
+        return seq
 
+    # Transfer back into index seqence for Evaluation
+    seq = [phonemes2index[phn] for phn in seq]
 
-
+    return seq

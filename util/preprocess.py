@@ -1,4 +1,5 @@
 # reference : https://github.com/Faur/TIMIT
+# 			  https://github.com/jameslyons/python_speech_features/issues/53
 import os
 import sys
 import wave
@@ -11,8 +12,8 @@ import scipy.io.wavfile as wav
 import python_speech_features as features
 # a python package for speech features at https://github.com/jameslyons/python_speech_features
 
-if len(sys.argv) != 2:
-	print('Usage: python3 preprocess.py <timit directory>')
+if len(sys.argv) != 3:
+	print('Usage: python3 preprocess.py <timit directory> <output_file>')
 
 
 ##### SCRIPT META VARIABLES #####
@@ -29,7 +30,7 @@ data_type = 'float32'
 paths = sys.argv[1]
 train_source_path	= os.path.join(paths, 'train')
 test_source_path	= os.path.join(paths, 'test')
-target_path			= os.path.join(paths, 'std_preprocess_26_ch')
+target_path			= os.path.join(paths, sys.argv[2])
 
 
 # 61 different phonemes
@@ -59,12 +60,10 @@ def create_mfcc(filename):
 
 	mfcc = features.mfcc(sample, rate, winlen=0.025, winstep=0.01, numcep = 13, nfilt=26,
 	preemph=0.97, appendEnergy=True)
+	d_mfcc = features.delta(mfcc, 2)
+	a_mfcc = features.delta(d_mfcc, 2)
 
-	derivative = np.zeros(mfcc.shape)
-	for i in range(1, mfcc.shape[0]-1):
-		derivative[i, :] = mfcc[i+1, :] - mfcc[i-1, :]
-
-	out = np.concatenate((mfcc, derivative), axis=1)
+	out = np.concatenate([mfcc, d_mfcc, a_mfcc], axis=1)
 
 	return out, out.shape[0]
 
@@ -174,7 +173,6 @@ for i in range(len(X_train_all)):
 print()
 print('Normalizing data to let mean=0, sd=1 for each channel.')
 
-
 mean_val, std_val, _ = calc_norm_param(X_train)
 
 X_train = normalize(X_train, mean_val, std_val)
@@ -195,14 +193,3 @@ with open(target_path + '.pkl', 'wb') as cPickle_file:
 
 print()
 print('Preprocessing completed in {:.3f} secs.'.format(timeit.default_timer() - program_start_time))
-
-
-
-
-
-
-
-
-
-
-

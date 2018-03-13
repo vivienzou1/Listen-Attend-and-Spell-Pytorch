@@ -6,10 +6,21 @@
 This is a pytorch implementation of [Listen, Attend and Spell](https://arxiv.org/abs/1508.01211v2) (LAS)  published in ICASSP 2016 (Student Paper Award).
 Please feel free to use/modify them, any bug report or improvment suggestion will be appreciated.
 
-This implement achieves 38% phoneme error rate on TIMIT (using original setting in the paper without hyper parameter tuning, models are stored in [`checkpoint/`](checkpoint/)). It's not a remarkable score but please notice that deep end2end ASR without special designed loss function such as LAS requires larger corpus to achieve outstanding performance. As a comparison, [my another implement of CTC]()(coming soon) achieves about 32% error rate with the exact same input and experiment setting.
+This implement achieves about 36% phoneme error rate on TIMIT's testing set (using original setting in the paper without hyper parameter tuning, models are stored in [`checkpoint/`](checkpoint/)). It's not a remarkable score but please notice that deep end2end ASR without special designed loss function such as LAS requires larger corpus to achieve outstanding performance.
+
+#### Learning Curve
 
 ![](log/result.jpg)
 
+#### Attention Visualization & Recognition Result
+
+Result of the first sample in TIMIT testing set.
+
+![](log/attention.jpg)
+
+#### Remarks
+
+The input feature is mfcc 39 (13+delta+accelerate), and the output phoneme classes is reduced from 61 to 39 classes during evaluation.
 
 
 Be aware of some difference between this implementation and the origianl proposed model:
@@ -63,11 +74,11 @@ If you have any questions, please contact b03902034[AT]ntu.edu.tw
 ## Setup
 - TIMIT Dataset Preprocess
 
-    Please prepare TIMIT dataset without modifying the file structure of it and run the following command to preprocess it from wave to mfcc 26 before training.
+    Please prepare TIMIT dataset without modifying the file structure of it and run the following command to preprocess it from wave to mfcc 39 before training.
     
         ./util/timit_preprocess.sh <TIMIT folder>       
     
-    After preprocessing step, `std_preprocess_26_ch.pkl` should be under your timit folder. Add your data path to config file.
+    After preprocessing step, `timit_mfcc_39.pkl` should be under your timit folder. Add your data path to config file.
 
 - LAS Model
         
