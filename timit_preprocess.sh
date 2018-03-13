@@ -1,5 +1,5 @@
 if [ "$#" -ne 1 ]; then
-    echo "Usage : ./util/timit_preprocess.sh <timit folder>"
+    echo "Usage : ./timit_preprocess.sh <timit folder>"
 fi
 echo 'Transfering raw TIMIT wave file format from NIST to RIFF.'
 echo ' '

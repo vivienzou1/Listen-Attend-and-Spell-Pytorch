@@ -76,7 +76,7 @@ If you have any questions, please contact b03902034[AT]ntu.edu.tw
 
     Please prepare TIMIT dataset without modifying the file structure of it and run the following command to preprocess it from wave to mfcc 39 before training.
     
-        ./util/timit_preprocess.sh <TIMIT folder>       
+        ./timit_preprocess.sh <TIMIT folder>       
     
     After preprocessing step, `timit_mfcc_39.pkl` should be under your timit folder. Add your data path to config file.
 
