@@ -79,7 +79,7 @@ If you have any questions, please contact b03902034[AT]ntu.edu.tw
         ./timit_preprocess.sh <TIMIT folder>       
     
     After preprocessing step, `timit_mfcc_39.pkl` should be under your timit folder. Add your data path to config file.
-
+    .....Still looking for approperiate TIMIT folder structure.....
 - LAS Model
         
         mkdir -p checkpoint
